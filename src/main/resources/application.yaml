@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: Products
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/products/**
+        - id: Cart
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/cart/**
+        - id: Reviews
+          uri: http://localhost:8083/
+          predicates:
+            - Path=/reviews/**
+  application:
+    name: eserver
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8080/eureka
