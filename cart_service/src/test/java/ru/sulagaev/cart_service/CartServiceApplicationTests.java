@@ -1,10 +1,10 @@
-package ru.sulagaev.cart_servicet;
+package ru.sulagaev.cart_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CartServicetApplicationTests {
+class CartServiceApplicationTests {
 
     @Test
     void contextLoads() {
