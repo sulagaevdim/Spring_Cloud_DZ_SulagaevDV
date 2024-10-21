@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ru.sulagaev</groupId>
-    <artifactId>cart_servicet</artifactId>
+    <artifactId>cart_service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>cart_servicet</name>
     <description>cart_servicet</description>

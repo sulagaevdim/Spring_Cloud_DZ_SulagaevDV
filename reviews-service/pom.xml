@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ru.sulagaev</groupId>
-    <artifactId>reviews</artifactId>
+    <artifactId>reviews-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>reviews</name>
     <description>reviews</description>
