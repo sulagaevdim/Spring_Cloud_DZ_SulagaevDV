@@ -1,7 +1,6 @@
 package ru.sulagaev.cart_service.model;
 import lombok.Data;
 import org.springframework.stereotype.Component;
-import ru.sulagaev.products.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,5 +15,9 @@ public class Cart {
     }
     public void delProduct(int id){
         productList.remove(id);
+    }
+
+    public String getNameById(int id){
+        return productList.get(id).getName();
     }
 }

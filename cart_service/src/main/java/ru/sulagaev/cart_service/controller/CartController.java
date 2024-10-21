@@ -3,8 +3,9 @@ package ru.sulagaev.cart_service.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.sulagaev.cart_service.model.Cart;
+import ru.sulagaev.cart_service.model.Product;
 import ru.sulagaev.cart_service.repository.ProductRepository;
-import ru.sulagaev.products.model.Product;
+
 
 import java.util.List;
 
@@ -16,8 +17,9 @@ public class CartController {
     private final ProductRepository repository;
 
     @PostMapping
-    public void getActualListProducts(@RequestBody List<Product> productList){
-        repository.setProductList(productList);
+    public void getActualListProducts(@RequestBody String product){
+        String[] split = product.split(":");
+        repository.save(new Product(split[0], split[1]));
     }
     @GetMapping
     public List<Product> findAllProductsInCart(){
@@ -25,16 +27,19 @@ public class CartController {
     }
 
     @GetMapping("/{id}")
-    public String addProductInCart(@PathVariable int id){
+    public String addProductInCart(@PathVariable Long id){
         try {
-            cart.addProduct(repository.getProductList().get(id - 1));
-            return "товар добавлен в корзину";
-        }catch (IndexOutOfBoundsException e){
-            return "Товара с таким id не существует";
+            cart.addProduct(repository.findById(id).orElse(null));
+            return "товар под номером " + id + " добавлен в корзину";
+        }catch (NullPointerException e){
+            return "товара не существует";
+        }catch (IndexOutOfBoundsException e) {
+            return "товара не существует";
         }
+
     }
     @DeleteMapping("/{id}")
     public void deleteProductFromCart(@PathVariable int id){
-        cart.delProduct(id);
+        cart.delProduct(id-1);
     }
 }

@@ -18,10 +18,10 @@ spring:
           predicates:
             - Path=/reviews/**
   application:
-    name: eserver
+    name: GateWayServer
 eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://localhost:8080/eureka
+      defaultZone: http://localhost:8761/eureka

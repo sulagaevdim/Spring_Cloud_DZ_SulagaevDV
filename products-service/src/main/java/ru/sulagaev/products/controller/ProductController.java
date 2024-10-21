@@ -27,27 +27,42 @@ public class ProductController {
     @PostMapping
     public Product save(@RequestBody Product product) throws IOException, InterruptedException {
         Product product1 = service.addProduct(product);
-        sendData(findAll());
+        sendAddingData(product);
         return product1;
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Long id) throws IOException, InterruptedException {
         service.delProduct(id);
-        sendData(findAll());
-        return "Продукт удален";
+        sendDeletingData(id);
+        return "Товар удален";
     }
 
     //отправка актуального списка товаров в сервисы "корзина" и "отзывы"
-    private void sendData(List<Product> productList) throws IOException, InterruptedException {
-        System.out.println("запуск метода");
+    private void sendAddingData(Product product) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8082/cart"))
-                .POST(HttpRequest.BodyPublishers.ofString(productList.toString()))
+                .POST(HttpRequest.BodyPublishers.ofString(product.getName() + ":" + product.getPrice()))
                 .build();
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
+        System.out.println("Запрос в МС -Корзина- отправлен");
+        request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8083/reviews/" + product.getName()))
+                .POST(HttpRequest.BodyPublishers.noBody()).build();
+        response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        System.out.println("Запрос в МС -Отзывы- отправлен");
+
+    }
+    private void sendDeletingData(Long id) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8082/cart/" + id))
+                .DELETE().build();
+        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.print(response.body());
+        System.out.println("Запрос в МС Корзина отправлен");
     }
 
 }

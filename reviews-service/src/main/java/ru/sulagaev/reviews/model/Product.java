@@ -1,4 +1,4 @@
-package ru.sulagaev.products.model;
+package ru.sulagaev.reviews.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -13,4 +13,11 @@ public class Product {
     private String name;
     private String price;
 
+    public Product(){
+
+    }
+    public Product(String name, String price) {
+        this.name = name;
+        this.price = price;
+    }
 }
